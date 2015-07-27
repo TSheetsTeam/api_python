@@ -1,42 +1,28 @@
-class User:
-    endpoint = 'users'
-    def __init__(self, **kwargs):
-        """
-          field :id, :integer
-          field :username, :string
-          field :email, :string
-          field :first_name, :string
-          field :last_name, :string
-          field :group_id, :integer
-          field :manager_of_group_ids, [ :integer ]
-          field :employee_number, :integer
-          field :salaried, :boolean
-          field :exempt, :boolean
-          field :payroll_id, :string
-          field :client_url, :string
-          field :mobile_number, :string
-          field :hire_date, :date
-          field :term_date, :date
-          field :last_active, :datetime
-          field :active, :boolean
-          field :require_password_change, :boolean
-          field :approved_to, :date
-          field :submitted_to, :date
-          field :last_modified, :datetime
-          field :created, :datetime
-          field :permissions, :user_permissions_set
+from model import Model
 
-        """
-        for k, v in kwargs.items():
-            print k
-            setattr(self, k, v)
-
-    def timesheets(self, **kwargs):
-        """
-        Returns the list of Timesheets objects for this user
-        """
-        if not hasattr(self, 'api'):
-            return []
-
-        kwargs.update({"user_ids": self.id})
-        return self.api.list_timesheets(**kwargs)
+class User(Model):
+    def __init__(self):
+        super(User, self).__init__()
+        self.add_field('id', 'int')
+        self.add_field('username', 'str')
+        self.add_field('email', 'str')
+        self.add_field('first_name', 'str')
+        self.add_field('last_name', 'str')
+        self.add_field('group_id', 'int')
+        self.add_field('manager_of_group_ids', 'list')
+        self.add_field('employee_number', 'int')
+        self.add_field('salaried', 'bool')
+        self.add_field('exempt', 'bool')
+        self.add_field('payroll_id', 'str')
+        self.add_field('client_url', 'str')
+        self.add_field('mobile_number','str')
+        self.add_field('hire_date', 'date')
+        self.add_field('term_date', 'date')
+        self.add_field('last_active', 'datetime')
+        self.add_field('active', 'bool')
+        self.add_field('require_password_change', 'bool')
+        self.add_field('approved_to', 'date')
+        self.add_field('submitted_to', 'date')
+        self.add_field('last_modified', 'datetime')
+        self.add_field('created', 'datetime')
+        self.add_field('permissions', 'user_permissions_set')
