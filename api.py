@@ -1,22 +1,15 @@
 import requests
 from requests import HTTPError
 from models.user import User
+from repository import UserRepository
+from http_client import HTTPClient
 
 class TSheets:
     def __init__(self, access_token):
-        self.base_url = 'https://rest.tsheets.com/api/v1/'
-        self._access_token = access_token
-        self.auth_options = {'Authorization': "Bearer {}".format(access_token)}
+        self._client = HTTPClient(access_token = access_token)
 
-        self.session = requests.Session()
-        self.session.headers.update(self.auth_options)
-        url = self.base_url + 'users'
+        self.users = UserRepository(self._client)
 
-        try:
-            response = self.session.get(url)
-            response.raise_for_status()
-        except HTTPError as e:
-            print e
 
     def _get(self, model_class, **kwargs):
         url = self.base_url + model_class.endpoint
