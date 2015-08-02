@@ -1,7 +1,7 @@
 import requests
 from models.user import User
 from repository import UserRepository
-from http_client import HTTPClient
+import logger
 
 class TSheets:
     def __init__(self, access_token):

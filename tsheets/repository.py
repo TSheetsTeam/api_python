@@ -1,5 +1,4 @@
 from models.user import User
-import json
 
 class UserRepository(object):
 

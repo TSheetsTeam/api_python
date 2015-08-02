@@ -1,9 +1,14 @@
 import requests
 import error
+import logging
+import logger
 
 class RestAdapter(object):
+    def __init__(self):
+        self.logger = logging.getLogger('tsheets_logger')
 
     def get(self, url, params, headers):
+        self.logger.debug("GET {} {} {}".format(url, params, headers))
         try:
             response = requests.get(url, params=params, headers=headers)
             response.raise_for_status()
@@ -12,7 +17,7 @@ class RestAdapter(object):
             raise error.TSheetsError(e)
 
     def post(self, url, data, options):
-        # print "POST #{url} (#{options.inspect}) - #{data.inspect}" if Typhoeus::Config.verbose
+        self.logger.debug("GET {} {} {}".format(url, data, options))
         try:
             response = requests.post(url, body = data, headers = options)
             response.raise_for_status()
@@ -21,7 +26,7 @@ class RestAdapter(object):
             raise error.TSheetsError(e)
 
     def put(self, url, data, options):
-        # print "PUT #{url} (#{options.inspect}) - #{data.inspect}" if Typhoeus::Config.verbose
+        self.logger.debug("GET {} {} {}".format(url, data, options))
         try:
             response = requests.put(url, body = data, headers = options)
             response.raise_for_status()
@@ -30,7 +35,7 @@ class RestAdapter(object):
             raise error.TSheetsError(e)
 
     def delete(self, url, data, options):
-        # print "DELETE #{url} (#{options.inspect}) - #{data.inspect}" if Typhoeus::Config.verbose
+        self.logger.debug("DELETE {} {} {}".format(url, data, options))
         try:
             response = requests.delete(url, params={ "ids": data['ids'].join(",") }, headers = options)
             response.raise_for_status()
