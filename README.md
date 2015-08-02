@@ -1,1 +1,1 @@
-:exclamation::exclamation: TSheets Python API is currently under development and not ready for general consumption :exclamation::exclamation:
+:exclamation::exclamation:TSheets Python API Helper is currently under development, not ready for general use:exclamation::exclamation:
