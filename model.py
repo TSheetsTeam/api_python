@@ -9,10 +9,12 @@ class Model(object):
 
     @classmethod
     def from_raw(cls, json_response={}):
-        o = cls.__init__()
-        for k,v in json_response.iteritems():
+        o = cls()
+        for k,v in json_response.items():
+            print k,v
             if k in o.accessors:
-                o.k = v
-
+                print "yes"
+                setattr(o, k, v)
+                print o.email
         return o
 

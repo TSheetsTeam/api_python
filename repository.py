@@ -1,5 +1,5 @@
 from models.user import User
-
+import json
 
 class UserRepository(object):
 
@@ -11,4 +11,8 @@ class UserRepository(object):
     def where(self):
         print self.url
         result = self.client.get(self.url)
+        result = result['results']['users']['2052270']
         print result
+        print type(result)
+        result_model = User.from_raw(result)
+        return result_model
