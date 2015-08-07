@@ -1,7 +1,7 @@
 import logger
 
 class Results(object):
-    def __init__(self, url, options, model, bridge, cache, is_singleton = False, mode = "list")
+    def __init__(self, url, options, model, bridge, cache, is_singleton = False, mode = "list"):
         self.url = url
         self.options = options
         self.model = model
@@ -27,14 +27,14 @@ class Results(object):
 
     def all(self):
         return list(self)
-    
+
     def __load_next_batch(self):
         response = self.bridge.next_batch(self.url, self.name, self.options, self.is_singleton, self.mode)
         batch = response['items']
         self.has_more = not self.is_singleton and self.mode == 'list' and response['has_more']
         if self.is_singleton:
           self.loaded = [ self.model.from_raw(batch, self.cache, response['supplemental']) ]
-        else
+        else:
           self.loaded += [self.model.from_raw(o, self.cache, response['supplemental']) for o in batch ]
         return batch
 

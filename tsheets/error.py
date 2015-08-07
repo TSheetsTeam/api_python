@@ -1,6 +1,6 @@
 
 class TSheetsError(Exception):
-    """Something went wrong while trying to execute the request."""
+    """Exception Class to handle the failure of the request."""
 
     def __init__(self, base_exception=None):
         self.base_exception = base_exception
