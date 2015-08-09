@@ -11,22 +11,27 @@ class Bridge(object):
 
     def items_from_data(self, data, name, is_singleton, mode):
         if mode == "report":
-            objects = data["results"].values[0]
-            return [] if not objects else objects.values
+            objects = data["results"].values()[0]
+            return [] if not objects else objects.values()
 
         if is_singleton or (not isinstance(data['results'][name], dict)):
+            print "If"
+            print data['results'][name]
             return data['results'][name]
         else:
-            return data['results'][name].values
+            print "Else"
+            print type(data['results'][name])
+            print data['results'][name].values()
+            return data['results'][name].values()
 
-    def next_batch(self, url, name, options, is_singleton = False, mode = "list"):
+    def next_batch(self, url, name, options, is_singleton = False, mode="list"):
         method = "get" if mode == "list" else "post"
 
         if mode == "report":
             options = {"data": 0 if not options else options}
 
         if method == "get":
-            response = self.config.adapter.get(urlparse.urljoin(self.config.base_url, url), options, self.auth_options)
+            response = self.config.adapter.get((self.config.base_url+url), options, self.auth_options)
         else:
             response = self.config.adapter.post(urlparse.urljoin(self.config.base_url, url), options, self.auth_options)
 
@@ -37,13 +42,14 @@ class Bridge(object):
                 return {"items": [], "has_more": False, "supplemental": {} }
             else:
                 s_dict = {}
-                if data['supplemental_data']:
-                  for key, value in data['supplemental_data'].iteritems():
-                    s_dict[key] = value.values
+                if 'supplemental_data' in data:
+                    for key, value in data['supplemental_data'].iteritems():
+                        s_dict[key] = value.values()
 
                 result = {"items": self.items_from_data(data, name, is_singleton, mode),
                           "has_more": (data["more"] == True),
                           "supplemental": s_dict}
+                print result
                 return result
         else:
             raise TSheetsError("Expectation Failed")
