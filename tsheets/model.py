@@ -2,7 +2,7 @@ import dateutil.parser
 import datetime
 from tsheets.helpers import to_class
 from tsheets.models import *
-
+from datetime import datetime, date
 
 class Model(object):
     accessors = {}
@@ -64,27 +64,27 @@ class Model(object):
         if isinstance(type_symbol, list):
             value = [cls.cast_raw(i, key, type_symbol[0]) for i in value]
             return value
-        elif type_symbol == "str":
+        elif type_symbol == str:
             return value
-        elif type_symbol == "int":
+        elif type_symbol == int:
             return int(value)
-        elif type_symbol == "datetime":
+        elif type_symbol == datetime:
             try:
                 return dateutil.parser.parse(value)
             except:
                 return None
-        elif type_symbol == "date":
+        elif type_symbol == date:
             try:
                 return datetime.datetime.strptime(value, "%Y-%m-%d").date()
             except:
                 return None
-        elif type_symbol == "bool":
+        elif type_symbol == bool:
             return value == True
-        elif type_symbol == "dict":
+        elif type_symbol == dict:
             return value
-        elif type_symbol == "float":
+        elif type_symbol == float:
             return float(value)
-        elif type_symbol == "object":
+        elif type_symbol == object:
             if not value:
                 return {}
             return value
@@ -92,4 +92,5 @@ class Model(object):
             return value
         else:
             #to_class(type_symbol)().from_raw(value)
+            #todo
             pass
