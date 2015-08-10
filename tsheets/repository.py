@@ -1,40 +1,57 @@
 from models.user import User
 from results import Results
+import dateutil
+from error import FilterInvalidValueError
+from datetime import date, datetime
 
 
 class Repository(object):
-    print "Repository class creation"
     filters = {}
     inherited_classes = []
 
     def __init__(self, bridge):
         self.bridge = bridge
 
-    def where(self, options={}):
+    def where(self, **options):
         if "list" in self.actions:
             return Results(self.url, self.validated_options(options), self.model, self.bridge, self.is_singleton)
 
-    def validated_options(self, options={}):
+    def validated_options(self, options):
         for name, value in options.iteritems():
-            if name in Repository.filters:
-                type_of_filter = Repository.filters[name]
-                if isinstance(type_of_filter, list):
-                    if not isinstance(value, list):
-                        # todo
-                        pass
-                    else:
-                        for i in value:
-                            if not isinstance(i, type_of_filter[0]):
-                                # todo raise exception
-                                print "Exception"
-                else:
-                    if not isinstance(value, type_of_filter):
-                        print "Exception"
-                        # todo
-            else:
-                # todo
-                print "Exception"
+            self.validate_options(name, value)
         return options
+
+    def validate_options(self, name, value):
+        if name in Repository.filters:
+            type_of_filter = Repository.filters[name]
+            if isinstance(type_of_filter, list):
+                if not isinstance(value, list):
+                    raise FilterInvalidValueError("Expected the value of {} filter to be an list".format(name))
+                else:
+                    for i in value:
+                        if not isinstance(i, type_of_filter[0]):
+                            raise FilterInvalidValueError("Expected all the values of a list for the {} filter to "
+                                                          "match the given type {}".format(name, type_of_filter))
+            else:
+                if type_of_filter == datetime or type_of_filter == date:
+                    self.validate_datetime(value, type_of_filter)
+                    return
+                if not isinstance(value, type_of_filter):
+                    raise FilterInvalidValueError("Expected the value for the {} filter to "
+                                                  "match the given type: {}".format(name, type_of_filter))
+        else:
+            raise FilterInvalidValueError("Unknown Filter for class - {} filter - {}".format(self.__class__, name))
+
+    def validate_datetime(self, value, type_of_filter):
+        try:
+            dateutil.parser.parse(value)
+            return
+        except:
+            if type_of_filter == "datetime":
+                raise FilterInvalidValueError("Expected datetime is String (ISO8601 format) "
+                                              "ie: (i.e. 2004-02-12T15:19:21+00:00)")
+            raise FilterInvalidValueError("Expected date format is String. YYYY-MM-DD formatted date. "
+                                          "ie: (i.e. 2004-02-12)")
 
     @classmethod
     def add_me_to_subcls(cls):
@@ -49,9 +66,11 @@ class Repository(object):
         cls.actions = action_list
 
     @classmethod
-    def add_model(cls, model, options={}):
+    def add_model(cls, model, **options):
         cls.model = model
+        print options
         cls.is_singleton = options.get("singleton", False)
+        print cls.is_singleton
 
     @classmethod
     def add_url(cls, url):
