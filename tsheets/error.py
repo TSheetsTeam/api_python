@@ -12,3 +12,5 @@ class TSheetsError(Exception):
         return "An unknown error occurred."
 
 
+class FilterInvalidValueError(TSheetsError):
+    pass
