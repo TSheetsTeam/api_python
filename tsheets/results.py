@@ -1,15 +1,18 @@
 import logger
+from helpers import class_to_endpoint
+
 
 class Results(object):
-    def __init__(self, url, options, model, bridge, cache, is_singleton=False, mode="list"):
+    def __init__(self, url, options, model, bridge, is_singleton=False, mode="list"):
         self.url = url
         self.options = options
         self.model = model
-        self.name = "users" #todo
+        print model.__name__
+        self.name = class_to_endpoint(model.__name__) + ('' if is_singleton else 's')
+        print self.name
         self.index = -1
         self.loaded = []
         self.bridge = bridge
-        self.cache = cache
         self.has_more = True
         self.is_singleton = is_singleton
         self.mode = mode
@@ -25,7 +28,6 @@ class Results(object):
             return next_value
         else:
             raise StopIteration
-
 
     def all(self):
         return list(self)
