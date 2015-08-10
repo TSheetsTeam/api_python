@@ -33,7 +33,7 @@ class Bridge(object):
         if method == "get":
             response = self.config.adapter.get((self.config.base_url+url), options, self.auth_options)
         else:
-            response = self.config.adapter.post(urlparse.urljoin(self.config.base_url, url), options, self.auth_options)
+            response = self.config.adapter.post((self.config.base_url+url), options, self.auth_options)
 
         data = response.json()
 
@@ -45,11 +45,10 @@ class Bridge(object):
                 if 'supplemental_data' in data:
                     for key, value in data['supplemental_data'].iteritems():
                         s_dict[key] = value.values()
-
+                has_more = data.get('more', None)
                 result = {"items": self.items_from_data(data, name, is_singleton, mode),
-                          "has_more": (data["more"] == True),
+                          "has_more": (has_more == 'true'),
                           "supplemental": s_dict}
-                print result
                 return result
         else:
             raise TSheetsError("Expectation Failed")
