@@ -9,17 +9,19 @@ class RestAdapter(object):
 
     def get(self, url, params, headers):
         self.logger.debug("GET {} {} {}".format(url, params, headers))
+        response = None
         try:
             response = requests.get(url, params=params, headers=headers)
+            print response.content
             response.raise_for_status()
             return response
         except requests.exceptions.RequestException as e:
-            raise error.TSheetsError(e)
+            raise error.TSheetsError(e, response)
 
     def post(self, url, data, options):
         self.logger.debug("GET {} {} {}".format(url, data, options))
         try:
-            response = requests.post(url, body = data, headers = options)
+            response = requests.post(url, body=data, headers = options)
             response.raise_for_status()
             return response
         except requests.exceptions.RequestException as e:
