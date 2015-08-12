@@ -6,6 +6,7 @@ from datetime import datetime, date
 
 class Model(object):
     accessors = {}
+    default_type = "anything"
 
     def __init__(self, hash = None):
         self._dynamic_accessors = []
@@ -19,6 +20,12 @@ class Model(object):
             Model.accessors[cls] = []
         exclude = options.get('exclude', [])
         Model.accessors[cls].append({'name': fname, 'type': type_f, 'exclude': exclude})
+
+
+    @classmethod
+    def add_default_type(cls, data_type):
+        cls.default_type = data_type
+
 
     @classmethod
     def from_raw(cls, hash):
@@ -41,11 +48,12 @@ class Model(object):
         return instance
 
     @classmethod
-    def type_for(cls, key):
-        for i in Model.accessors[cls]:
-            if i["name"] == key:
+    def type_for(cls, field_name):
+        accessor = Model.accessors.get(cls, [])
+        for i in accessor:
+            if i["name"] == field_name:
                 return i["type"]
-        return "anything"
+        return cls.default_type
 
     @classmethod
     def type_for_key(cls, key):
