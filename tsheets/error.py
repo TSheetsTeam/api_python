@@ -11,9 +11,13 @@ class TSheetsError(Exception):
             return str(self.base_exception)
         return "An unknown error occurred."
 
+
 class FilterInvalidValueError(TSheetsError):
     pass
 
+
+class MethodNotAvailableError(TSheetsError):
+    pass
 
 
 class TSheetsExpectedError(Exception):
