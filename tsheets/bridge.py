@@ -16,13 +16,8 @@ class Bridge(object):
             return [] if not objects else objects.values()
 
         if is_singleton or (not isinstance(data['results'][name], dict)):
-            print "If"
-            print data['results'][name]
             return data['results'][name]
         else:
-            print "Else"
-            print type(data['results'][name])
-            print data['results'][name].values()
             return data['results'][name].values()
 
     def next_batch(self, url, name, options, is_singleton = False, mode="list"):

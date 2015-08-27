@@ -35,12 +35,10 @@ class Results(object):
     def __load_next_batch(self):
         response = self.bridge.next_batch(self.url, self.name, self.options, self.is_singleton, self.mode)
         batch = response['items']
-        print "Batch"
-        print batch
         self.has_more = not self.is_singleton and self.mode == 'list' and response['has_more']
         if self.is_singleton:
           self.loaded = [ self.model.from_raw(batch) ]
         else:
-          self.loaded += [self.model.from_raw(o) for o in batch ]
+          self.loaded += [self.model.from_raw(o) for o in batch]
         return batch
 
