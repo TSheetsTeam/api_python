@@ -25,6 +25,9 @@ class Results(object):
         else:
             raise StopIteration
 
+    def first(self):
+        return self.next()
+
     def all(self):
         return list(self)
 

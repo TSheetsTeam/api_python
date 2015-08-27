@@ -1,7 +1,6 @@
+import helpers
 import dateutil.parser
 from datetime import datetime, date
-from tsheets.helpers import to_class
-
 
 class Model(object):
     _accessors = {}
@@ -95,7 +94,7 @@ class Model(object):
         elif type_symbol == "anything":
             return value
         else:
-            return to_class(type_symbol)().from_raw(value)
+            return helpers.to_class(type_symbol)().from_raw(value)
 
     def cast_to_raw(self, value, key, type = None):
         type_symbol = type or self.__class__.type_for_key(key)
