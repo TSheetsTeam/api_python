@@ -41,6 +41,8 @@ class Repository(object):
                     if not isinstance(value, type_of_filter):
                         raise FilterInvalidValueError("Expected the value for the {} filter to "
                                                       "match the given type: {}".format(name, type_of_filter))
+                    if type_of_filter == datetime or type_of_filter == date:
+                        options[name] = str(value)
             else:
                 raise FilterInvalidValueError("Unknown Filter for class - {} filter - {}".format(self.__class__, name))
         return options
