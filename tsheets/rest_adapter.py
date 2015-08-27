@@ -42,16 +42,24 @@ class RestAdapter(object):
         self.logger.debug("PUT {} {} {}".format(url, data, options))
         response = None
         try:
-            response = requests.put(url, body = data, headers = options)
+            print json.dumps(data)
+            options.update({'Content-type': 'application/json'})
+            response = requests.put(url, json=data, headers=options)
             response.raise_for_status()
+            print response.content
             return response
         except requests.exceptions.RequestException as e:
+            if response is not None:
+                if response.status_code == 417:
+                    raise error.TSheetsExpectedError(e, response)
             raise error.TSheetsError(e)
 
     def delete(self, url, data, options):
         self.logger.debug("DELETE {} {} {}".format(url, data, options))
         try:
-            response = requests.delete(url, params={ "ids": data['ids'].join(",") }, headers = options)
+            ids_to_delete = ','.join(str(id) for id in data['ids'])
+            print ids_to_delete
+            response = requests.delete(url, params={"ids":ids_to_delete }, headers=options)
             response.raise_for_status()
             return response
         except requests.exceptions.RequestException as e:
