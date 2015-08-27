@@ -19,6 +19,9 @@ class Repository(object):
         if self.validate_actions("report"):
             return Results(self.url, self.validated_options(options), self.model, self.bridge, self.is_singleton, "report")
 
+    def first(self):
+        return self.where().next()
+
     def all(self):
         return self.where().all()
 
