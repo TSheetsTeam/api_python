@@ -1,3 +1,4 @@
+import logger
 from models import *
 from config import Config
 from bridge import Bridge

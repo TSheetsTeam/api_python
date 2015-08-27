@@ -13,7 +13,7 @@ class Repository(object):
 
     def where(self, **options):
         if self.validate_actions("list"):
-            return Results(self.url, self.validated_options(options), self.model, self.bridge, self.is_singleton)
+            return Results(self.url, self.validated_options(options), self, self.bridge, self.is_singleton)
 
     def report(self, **options):
         if self.validate_actions("report"):
@@ -42,7 +42,8 @@ class Repository(object):
                         raise FilterInvalidValueError("Expected the value for the {} filter to "
                                                       "match the given type: {}".format(name, type_of_filter))
                     if type_of_filter == datetime or type_of_filter == date:
-                        options[name] = str(value)
+                        #options[name] = str(value)
+                        pass
             else:
                 raise FilterInvalidValueError("Unknown Filter for class - {} filter - {}".format(self.__class__, name))
         return options
