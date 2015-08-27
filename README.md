@@ -2,7 +2,7 @@
 
 # TSheets API - Python client library
 
-This client library provides access to the REST API exposed by the TSheets.com.
+This client library provides access to the REST API exposed by TSheets.com.
 
 # Usage
 
@@ -61,7 +61,7 @@ Some end points permit insertion of new data. This is accomplished with e. g:
 ```python
 from tsheets.models import Timesheet
 timesheet = Timesheet(user_id= 1, type= 'manual', date= '2015-05-05', duration= 5500, jobcode_id=0)
-result = api.timesheets.insert(t)
+result = api.timesheets.insert(timesheet)
 ```
 
 
