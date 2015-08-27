@@ -1,13 +1,14 @@
 import json
 import urlparse
 from error import TSheetsError
+from result import Result
 
 
 class Bridge(object):
 
     def __init__(self, config):
         self.config = config
-        self.auth_options = { "Authorization" : "Bearer {}".format(self.config.access_token)}
+        self.auth_options = {"Authorization" : "Bearer {}".format(self.config.access_token)}
 
     def items_from_data(self, data, name, is_singleton, mode):
         if mode == "report":
@@ -36,7 +37,6 @@ class Bridge(object):
             response = self.config.adapter.post((self.config.base_url+url), options, self.auth_options)
 
         data = response.json()
-
         if response.status_code == 200:
             if not data:
                 return {"items": [], "has_more": False, "supplemental": {} }
@@ -54,13 +54,13 @@ class Bridge(object):
             raise TSheetsError("Expectation Failed")
 
     def insert(self, url, raw_entity):
-        response = self.config.adapter.post(urlparse.urljoin(self.config.base_url, url), {'data': [raw_entity]}, self.auth_options)
-        return response
+        response = self.config.adapter.post((self.config.base_url + url), {'data': [raw_entity]}, self.auth_options)
+        return Result(response.status_code, response.json())
 
     def update(self, url, raw_entity):
-        response = self.config.adapter.put(urlparse.urljoin(self.config.base_url, url), {'data': [raw_entity]}, self.auth_options)
-        return response
+        response = self.config.adapter.put((self.config.base_url+url), {'data': [raw_entity]}, self.auth_options)
+        return Result(response.status_code, response.json())
 
     def delete(self, url, id):
-        response = self.config.adapter.delete(urlparse.urljoin(self.config.base_url, url), {'ids': [id]}, self.auth_options)
-        return response
+        response = self.config.adapter.delete((self.config.base_url+url), {'ids': [id]}, self.auth_options)
+        return Result(response.status_code, response.json())
