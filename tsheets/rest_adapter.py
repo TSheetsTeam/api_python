@@ -2,6 +2,8 @@ import requests
 import error
 import logging
 import logger
+import json
+
 
 class RestAdapter(object):
     def __init__(self):
@@ -15,21 +17,30 @@ class RestAdapter(object):
             response.raise_for_status()
             return response
         except requests.exceptions.RequestException as e:
-            if response.status_code == 417:
-                raise error.TSheetsExpectedError(e, response)
+            if response is not None:
+                if response.status_code == 417:
+                    raise error.TSheetsExpectedError(e, response)
             raise error.TSheetsError(e)
 
     def post(self, url, data, options):
-        self.logger.debug("GET {} {} {}".format(url, data, options))
+        self.logger.debug("POST {} {} {}".format(url, data, options))
+        response = None
         try:
-            response = requests.post(url, body=data, headers = options)
+            print json.dumps(data)
+            options.update({'Content-type': 'application/json'})
+            response = requests.post(url, json=data, headers=options)
             response.raise_for_status()
+            print response.content
             return response
         except requests.exceptions.RequestException as e:
+            if response is not None:
+                if response.status_code == 417:
+                    raise error.TSheetsExpectedError(e, response)
             raise error.TSheetsError(e)
 
     def put(self, url, data, options):
-        self.logger.debug("GET {} {} {}".format(url, data, options))
+        self.logger.debug("PUT {} {} {}".format(url, data, options))
+        response = None
         try:
             response = requests.put(url, body = data, headers = options)
             response.raise_for_status()
