@@ -3,7 +3,6 @@ import logging
 import requests
 
 
-
 class RestAdapter(object):
     def __init__(self):
         self.logger = logging.getLogger('tsheets_logger')

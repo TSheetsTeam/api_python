@@ -4,6 +4,7 @@ from bridge import Bridge
 from helpers import class_to_endpoint
 from tsheets.repository import Repository
 
+
 class TSheets:
     _repos = []
     for repo in Repository.inherited_classes:

@@ -2,6 +2,7 @@ import dateutil.parser
 from datetime import datetime, date
 from tsheets.helpers import to_class
 
+
 class Model(object):
     _accessors = {}
     _default_type = "anything"
@@ -22,7 +23,6 @@ class Model(object):
     @classmethod
     def add_default_type(cls, data_type):
         cls._default_type = data_type
-
 
     @classmethod
     def from_raw(cls, hash):
@@ -58,7 +58,7 @@ class Model(object):
 
     @classmethod
     def cast_raw(cls, value, key, type=None):
-        if value == None:
+        if value is None:
             return None
         if type:
             type_symbol = type

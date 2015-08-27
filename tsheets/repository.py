@@ -4,7 +4,6 @@ from datetime import date, datetime
 from error import FilterInvalidValueError, MethodNotAvailableError
 
 
-
 class Repository(object):
     filters = {}
     inherited_classes = []

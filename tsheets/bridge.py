@@ -2,7 +2,6 @@ from result import Result
 from error import TSheetsError
 
 
-
 class Bridge(object):
 
     def __init__(self, config):

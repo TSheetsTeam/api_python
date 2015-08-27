@@ -33,8 +33,8 @@ class Results(object):
         batch = response['items']
         self.has_more = not self.is_singleton and self.mode == 'list' and response['has_more']
         if self.is_singleton:
-          self.loaded = [ self.model.from_raw(batch) ]
+            self.loaded = [ self.model.from_raw(batch) ]
         else:
-          self.loaded += [self.model.from_raw(o) for o in batch]
+            self.loaded += [self.model.from_raw(o) for o in batch]
         return batch
 

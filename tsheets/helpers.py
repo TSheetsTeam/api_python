@@ -5,6 +5,7 @@ import tsheets
 import importlib
 from tsheets.models import *
 
+
 def get_class(kls):
     parts = kls.split('.')
     module = ".".join(parts[:-1])
@@ -12,6 +13,7 @@ def get_class(kls):
     for comp in parts[1:]:
         m = getattr(m, comp)
     return m
+
 
 def to_class(value):
     components = value.split('_')
