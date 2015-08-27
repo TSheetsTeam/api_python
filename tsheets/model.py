@@ -1,30 +1,28 @@
 import dateutil.parser
-import datetime
 from tsheets.helpers import to_class
-from tsheets.models import *
 from datetime import datetime, date
 
-class Model(object):
-    accessors = {}
-    default_type = "anything"
 
-    def __init__(self, hash = None):
+class Model(object):
+    _accessors = {}
+    _default_type = "anything"
+
+    def __init__(self, **kwargs):
         self._dynamic_accessors = []
-        if hash:
-            self.__class__.mass_assign(self, hash)
+        if kwargs:
+            self.__class__.mass_assign(self, kwargs)
 
     @classmethod
     def add_field(cls, fname, type_f, options={}):
         setattr(cls, fname, None)
-        if cls not in Model.accessors:
-            Model.accessors[cls] = []
+        if cls not in Model._accessors:
+            Model._accessors[cls] = []
         exclude = options.get('exclude', [])
-        Model.accessors[cls].append({'name': fname, 'type': type_f, 'exclude': exclude})
-
+        Model._accessors[cls].append({'name': fname, 'type': type_f, 'exclude': exclude})
 
     @classmethod
     def add_default_type(cls, data_type):
-        cls.default_type = data_type
+        cls._default_type = data_type
 
 
     @classmethod
@@ -49,11 +47,11 @@ class Model(object):
 
     @classmethod
     def type_for(cls, field_name):
-        accessor = Model.accessors.get(cls, [])
+        accessor = Model._accessors.get(cls, [])
         for i in accessor:
             if i["name"] == field_name:
                 return i["type"]
-        return cls.default_type
+        return cls._default_type
 
     @classmethod
     def type_for_key(cls, key):
