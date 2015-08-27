@@ -14,8 +14,12 @@ class Repository(object):
         self.bridge = bridge
 
     def where(self, **options):
-        if "list" in self.actions:
+        if self.validate_actions("list"):
             return Results(self.url, self.validated_options(options), self.model, self.bridge, self.is_singleton)
+
+    def report(self, **options):
+        if self.validate_actions("report"):
+            return Results(self.url, self.validated_options(options), self.model, self.bridge, self.is_singleton, "report")
 
     def all(self):
         return self.where().all()
