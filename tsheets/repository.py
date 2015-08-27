@@ -1,9 +1,8 @@
-from models.user import User
-from results import Results
 import dateutil
-from error import FilterInvalidValueError, MethodNotAvailableError
+from results import Results
 from datetime import date, datetime
-import pytz
+from error import FilterInvalidValueError, MethodNotAvailableError
+
 
 
 class Repository(object):
@@ -78,9 +77,7 @@ class Repository(object):
     @classmethod
     def add_model(cls, model, **options):
         cls.model = model
-        print options
         cls.is_singleton = options.get("singleton", False)
-        print cls.is_singleton
 
     @classmethod
     def add_url(cls, url):

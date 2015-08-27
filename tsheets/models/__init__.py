@@ -14,4 +14,3 @@ from jobcode_assignment import JobcodeAssignment
 from custom_field import CustomField
 from custom_field_item import CustomFieldItem
 from geolocation import Geolocation
-print "####models init"

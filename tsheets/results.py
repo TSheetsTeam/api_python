@@ -1,4 +1,3 @@
-import logger
 from helpers import class_to_endpoint
 
 
@@ -7,9 +6,7 @@ class Results(object):
         self.url = url
         self.options = options
         self.model = model
-        print model.__name__
         self.name = class_to_endpoint(model.__name__) + ('' if is_singleton else 's')
-        print self.name
         self.index = -1
         self.loaded = []
         self.bridge = bridge
@@ -24,7 +21,6 @@ class Results(object):
         if (self.index+1) < len(self.loaded) or (self.has_more and self.__load_next_batch()):
             self.index += 1
             next_value = self.loaded[self.index]
-            print next_value
             return next_value
         else:
             raise StopIteration

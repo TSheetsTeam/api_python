@@ -1,11 +1,9 @@
 import re
-from tsheets.models import *
 import sys
 import types
 import tsheets
 import importlib
-print globals()
-
+from tsheets.models import *
 
 def get_class(kls):
     parts = kls.split('.')

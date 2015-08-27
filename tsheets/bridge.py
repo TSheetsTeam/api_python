@@ -1,7 +1,6 @@
-import json
-import urlparse
-from error import TSheetsError
 from result import Result
+from error import TSheetsError
+
 
 
 class Bridge(object):

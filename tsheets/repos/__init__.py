@@ -14,4 +14,3 @@ from timesheets_deleted import TimesheetsDeleted
 from timesheets import Timesheets
 from users import Users
 from current_user import CurrentUser
-print "####repos init"

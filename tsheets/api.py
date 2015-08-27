@@ -1,9 +1,8 @@
-import requests
-from tsheets.repository import Repository
+from models import *
 from config import Config
 from bridge import Bridge
 from helpers import class_to_endpoint
-from models import *
+from tsheets.repository import Repository
 
 class TSheets:
     _repos = []
@@ -16,5 +15,4 @@ class TSheets:
         self.bridge = Bridge(self.config)
         self.cache = None
         for repo in TSheets._repos:
-            print repo["name"]
             setattr(self, repo["name"], repo["class"](self.bridge))

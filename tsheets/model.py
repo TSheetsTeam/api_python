@@ -1,7 +1,6 @@
 import dateutil.parser
-from tsheets.helpers import to_class
 from datetime import datetime, date
-
+from tsheets.helpers import to_class
 
 class Model(object):
     _accessors = {}
@@ -61,7 +60,6 @@ class Model(object):
     def cast_raw(cls, value, key, type=None):
         if value == None:
             return None
-        print value
         if type:
             type_symbol = type
         else:
@@ -140,14 +138,10 @@ class Model(object):
             return value.to_raw()
 
     def to_raw(self, mode=None):
-        print mode
         attributes = self.get_attributes(mode)
         obj = {}
         for k, v in attributes.iteritems():
-            print k, v
             obj[k] = self.cast_to_raw(v, k)
-        print "To raw"
-        print obj
         return obj
 
     def allowed_for_mode(self, mode, acc):
@@ -160,20 +154,14 @@ class Model(object):
         return sum
 
     def get_attributes(self, mode=None):
-        print "get_attributes_mode"
-        print mode
         _accessors = Model._accessors[self.__class__] if self.__class__ in Model._accessors else []
-        print "_accessors"
-        print _accessors
         acc = [a for a in _accessors if self.allowed_for_mode(mode, a)]
 
         acc = []
         for a in _accessors:
             if self.allowed_for_mode(mode, a):
-                print a
+
                 acc.append(a)
-        print "allowed attributes"
-        print acc
         return self.attribute_for_accessors(acc)
 
 

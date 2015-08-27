@@ -10,7 +10,6 @@ class Result(object):
     def _get_status_code(self):
         try:
             status_code = self.body['results'].values()[0].values()[0]['_status_code']
-            print status_code
             return status_code
         except:
             return 0
