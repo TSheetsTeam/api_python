@@ -59,9 +59,9 @@ class Model(object):
 
     @classmethod
     def cast_raw(cls, value, key, type=None):
-        if not value:
+        if value == None:
             return None
-
+        print value
         if type:
             type_symbol = type
         else:
@@ -81,7 +81,7 @@ class Model(object):
                 return None
         elif type_symbol == date:
             try:
-                return datetime.datetime.strptime(value, "%Y-%m-%d").date()
+                return datetime.strptime(value, "%Y-%m-%d").date()
             except:
                 return None
         elif type_symbol == bool:
@@ -97,6 +97,83 @@ class Model(object):
         elif type_symbol == "anything":
             return value
         else:
-            #to_class(type_symbol)().from_raw(value)
-            #todo
-            pass
+            return to_class(type_symbol)().from_raw(value)
+
+    def cast_to_raw(self, value, key, type = None):
+        type_symbol = type or self.__class__.type_for_key(key)
+        if isinstance(type_symbol, list):
+            value = [self.cast_to_raw(i, key, type_symbol[0]) for i in value]
+            return value
+        elif type_symbol == str:
+            return value
+        elif type_symbol == int:
+            return value
+        elif type_symbol == datetime:
+            if not value:
+                return ""
+            try:
+                return value.isoformat()
+            except:
+                return None
+        elif type_symbol == date:
+            if not value:
+                return ""
+            try:
+                return value.strftime("%Y-%m-%d")
+            except:
+                return None
+        elif type_symbol == bool:
+            return value
+        elif type_symbol == dict:
+            return value
+        elif type_symbol == float:
+            return value
+        elif type_symbol == object:
+            if not value:
+                return ""
+            return value
+        elif type_symbol == "anything":
+            return value
+        else:
+            if not value:
+                return None
+            return value.to_raw()
+
+    def to_raw(self, mode=None):
+        print mode
+        attributes = self.get_attributes(mode)
+        obj = {}
+        for k, v in attributes.iteritems():
+            print k, v
+            obj[k] = self.cast_to_raw(v, k)
+        print "To raw"
+        print obj
+        return obj
+
+    def allowed_for_mode(self, mode, acc):
+        return (mode is None) or (not bool(acc['exclude'])) or not (mode in acc['exclude'])
+
+    def attribute_for_accessors(self, accessor):
+        sum = {}
+        for acc in accessor:
+            sum[acc['name']] = self.__getattribute__(acc['name'])
+        return sum
+
+    def get_attributes(self, mode=None):
+        print "get_attributes_mode"
+        print mode
+        _accessors = Model._accessors[self.__class__] if self.__class__ in Model._accessors else []
+        print "_accessors"
+        print _accessors
+        acc = [a for a in _accessors if self.allowed_for_mode(mode, a)]
+
+        acc = []
+        for a in _accessors:
+            if self.allowed_for_mode(mode, a):
+                print a
+                acc.append(a)
+        print "allowed attributes"
+        print acc
+        return self.attribute_for_accessors(acc)
+
+
