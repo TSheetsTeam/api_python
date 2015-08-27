@@ -36,7 +36,6 @@ class Results(object):
     def _load_next_batch(self):
         if self.repo.filters.get('page', False):
             self.options.update({'page': self.page})
-        print self.options
         response = self.bridge.next_batch(self.url, self.name, self.options, self.is_singleton, self.mode)
 
         batch = response['items']
