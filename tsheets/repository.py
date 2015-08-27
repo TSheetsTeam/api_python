@@ -1,7 +1,7 @@
 from models.user import User
 from results import Results
 import dateutil
-from error import FilterInvalidValueError
+from error import FilterInvalidValueError, MethodNotAvailableError
 from datetime import date, datetime
 import pytz
 
@@ -33,10 +33,6 @@ class Repository(object):
                                 raise FilterInvalidValueError("Expected all the values of a list for the {} filter to "
                                                               "match the given type {}".format(name, type_of_filter))
                 else:
-                    if type_of_filter == datetime or type_of_filter == date:
-                        dt = self.validate_datetime(value, type_of_filter)
-                        options[name] = str(dt)
-                        continue
                     if not isinstance(value, type_of_filter):
                         raise FilterInvalidValueError("Expected the value for the {} filter to "
                                                       "match the given type: {}".format(name, type_of_filter))
@@ -44,18 +40,24 @@ class Repository(object):
                 raise FilterInvalidValueError("Unknown Filter for class - {} filter - {}".format(self.__class__, name))
         return options
 
-    def validate_datetime(self, value, type_of_filter):
-        try:
-            dt = dateutil.parser.parse(value)
-            if not dt.tzinfo:
-                return dt.replace(tzinfo=pytz.UTC).isoformat()
-            return dt.isoformat()
-        except:
-            if type_of_filter == "datetime":
-                raise FilterInvalidValueError("Expected datetime is String (ISO8601 format) "
-                                              "ie: (i.e. 2004-02-12T15:19:21+00:00)")
-            raise FilterInvalidValueError("Expected date format is String. YYYY-MM-DD formatted date. "
-                                          "ie: (i.e. 2004-02-12)")
+    def validate_actions(self, action):
+        if action in self.actions:
+            return True
+        else:
+            raise MethodNotAvailableError("Method '{}' not available on {} due to lack of the {} in available actions "
+                                          "list. Actions list: {}".format(action, self.__class__.__name__, action, self.actions))
+
+    def insert(self, entity):
+        if self.validate_actions("add"):
+            return self.bridge.insert(self.url, entity.to_raw("add"))
+
+    def update(self, entity):
+        if self.validate_actions("edit"):
+            return self.bridge.update(self.url, entity.to_raw("edit"))
+
+    def delete(self, entity):
+        if self.validate_actions("delete"):
+            return self.bridge.delete(self.url, entity.id)
 
     @classmethod
     def add_me_to_subcls(cls):
