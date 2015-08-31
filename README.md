@@ -4,6 +4,12 @@
 
 This client library provides access to the REST API exposed by TSheets.com.
 
+# Installation
+
+You can install tsheets library via pip:
+
+    $ pip install -U tsheets
+
 # Usage
 
 These examples assume that you properly added the tsheets library into your pip requirements.txt or have loaded the library in another way.
