@@ -10,7 +10,7 @@ packages = [
 
 setup(
     name='tsheets',
-    version='0.2',
+    version='0.3',
     description='API library helper for TSheets.com',
     long_description='Allows to use the TSheets.com API to manage the timesheets and all other related data',
     author='Kannan Ponnusamy',
@@ -18,7 +18,7 @@ setup(
     license='MIT',
     packages=find_packages(exclude=['tests']),
     url='https://github.com/tsheets/api_python',
-    download_url='https://github.com/tsheets/api_python/tarball/0.1',
+    download_url='https://github.com/tsheets/api_python/tarball/0.3',
     keywords=['api', 'rest', 'tsheets'],
     install_requires=['requests>=2.7.0']
 )
