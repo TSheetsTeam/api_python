@@ -1,3 +1,4 @@
+import pytz
 import dateutil
 from results import Results
 from datetime import date, datetime
@@ -41,11 +42,22 @@ class Repository(object):
                     if not isinstance(value, type_of_filter):
                         raise FilterInvalidValueError("Expected the value for the {} filter to "
                                                       "match the given type: {}".format(name, type_of_filter))
-                    if type_of_filter == datetime or type_of_filter == date:
+                    if type_of_filter == date:
                         options[name] = str(value)
+                    if type_of_filter == datetime:
+                        dt = self.validate_datetime(value)
+                        options[name] = dt
             else:
                 raise FilterInvalidValueError("Unknown Filter for class - {} filter - {}".format(self.__class__, name))
         return options
+
+    def validate_datetime(self, dt):
+        try:
+            if not dt.tzinfo:
+                return dt.replace(tzinfo=pytz.UTC).isoformat()
+            return dt.isoformat()
+        except:
+            raise FilterInvalidValueError("Expected datetime is datetime format (ISO8601 format)")
 
     def validate_actions(self, action):
         if action in self.actions:

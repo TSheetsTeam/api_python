@@ -1,3 +1,4 @@
+import pytz
 import helpers
 import dateutil.parser
 from datetime import datetime, date
@@ -109,6 +110,8 @@ class Model(object):
             if not value:
                 return ""
             try:
+                if not value.tzinfo:
+                    return value.replace(tzinfo=pytz.UTC).replace(microsecond=0).isoformat()
                 return value.isoformat()
             except:
                 return None
