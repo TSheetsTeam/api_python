@@ -21,7 +21,7 @@ The TSheets platform uses OAuth2 for authentication. Because of the character of
 Once the auth token is obtained, a user has to create the 'api' instance object e.g:
 
 ```python
-from tsheets import TSheets
+from tsheets.api import TSheets
 api = TSheets("authtoken")
 ```
 
