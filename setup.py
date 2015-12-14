@@ -20,5 +20,9 @@ setup(
     url='https://github.com/tsheets/api_python',
     download_url='https://github.com/tsheets/api_python/tarball/0.3',
     keywords=['api', 'rest', 'tsheets'],
-    install_requires=['requests>=2.7.0']
+    install_requires=[
+        'requests>=2.7.0',
+        'python-dateutil==2.4.2',
+        'pytz==2015.7'
+    ]
 )
