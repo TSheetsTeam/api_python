@@ -39,6 +39,10 @@ def main():
 
     print "Successfully connected to TSheets. Grabbed the current user's id: {}".format(user_id)
 
+    # Make sure we can pull last-modified, non-paginated
+    last_modified = api.last_modified_timestamps.where(endpoints='timesheets')
+    print "Found timestamp for timesheets: {}".format(last_modified.first().timesheets)
+
     # get a list of job codes
     my_jobcode = None
     jobcodes = api.jobcodes.where(type = 'regular', active = True)

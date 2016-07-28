@@ -7,6 +7,7 @@ class CustomField(Model):
 
 
 CustomField.add_field("id", int)
+CustomField.add_field("active", bool)
 CustomField.add_field("name", str)
 CustomField.add_field("short_code", str)
 CustomField.add_field("required", bool)
