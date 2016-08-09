@@ -1,4 +1,5 @@
 from helpers import class_to_endpoint
+import repos
 
 
 class Results(object):
@@ -34,8 +35,11 @@ class Results(object):
         return list(self)
 
     def _load_next_batch(self):
-        if self.repo.filters.get('page', False):
-            self.options.update({'page': self.page})
+        # Because LastModifiedTimestamps can't deal with pagination, we have
+        # to exclude it here.
+        if not isinstance(self.repo, repos.LastModifiedTimestamps):
+            if self.repo.filters.get('page', False):
+                self.options.update({'page': self.page})
         response = self.bridge.next_batch(self.url, self.name, self.options, self.is_singleton, self.mode)
 
         batch = response['items']
