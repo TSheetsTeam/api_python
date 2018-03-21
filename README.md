@@ -16,7 +16,7 @@ These examples assume that you properly added the tsheets library into your pip 
 
 ## Authentication
 
-The TSheets platform uses OAuth2 for authentication. Because of the character of the library, it doesn't deal with the process of obtaining the authentication token needed for the OAuth2 protocol. You can find information about obtaining the token statically via the application's interface here: [https://developers.tsheets.com/docs/api/authentication]()
+The TSheets platform uses OAuth2 for authentication. Because of the character of the library, it doesn't deal with the process of obtaining the authentication token needed for the OAuth2 protocol. You can find information about obtaining the token statically via the application's interface here: <https://developers.tsheets.com/docs/api/authentication>
 
 Once the auth token is obtained, a user has to create the 'api' instance object e.g:
 
@@ -117,7 +117,7 @@ end
 
 ### Specifics
 
-All information about possible filters one can pass to **where**, or required when inserting or updating are available at [https://developers.tsheets.com/docs/api/]()
+All information about possible filters one can pass to **where**, or required when inserting or updating are available at <https://developers.tsheets.com/docs/api/>
 
 ## Reports
 
