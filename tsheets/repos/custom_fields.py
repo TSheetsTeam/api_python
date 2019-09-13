@@ -10,7 +10,7 @@ class CustomFields(Repository):
 CustomFields.add_me_to_subcls()
 CustomFields.add_url("/customfields")
 CustomFields.add_model(models.CustomField)
-CustomFields.add_actions([u'list'])
+CustomFields.add_actions(['list'])
 CustomFields.filter("ids", [int])
 CustomFields.filter("active", bool)
 CustomFields.filter("applies_to", str)

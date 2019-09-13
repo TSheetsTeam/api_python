@@ -10,7 +10,7 @@ class CustomFieldItems(Repository):
 CustomFieldItems.add_me_to_subcls()
 CustomFieldItems.add_url("/customfielditems")
 CustomFieldItems.add_model(models.CustomFieldItem)
-CustomFieldItems.add_actions([u'list', u'add', u'edit'])
+CustomFieldItems.add_actions(['list', 'add', 'edit'])
 CustomFieldItems.filter("customfield_id", int)
 CustomFieldItems.filter("ids", [int])
 CustomFieldItems.filter("active", str)

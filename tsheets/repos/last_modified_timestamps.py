@@ -10,5 +10,5 @@ class LastModifiedTimestamps(Repository):
 LastModifiedTimestamps.add_me_to_subcls()
 LastModifiedTimestamps.add_url("/last_modified_timestamps")
 LastModifiedTimestamps.add_model(models.LastModifiedTimestamps, singleton=True)
-LastModifiedTimestamps.add_actions([u'list'])
+LastModifiedTimestamps.add_actions(['list'])
 LastModifiedTimestamps.filter("endpoints", str)

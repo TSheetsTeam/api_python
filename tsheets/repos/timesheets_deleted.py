@@ -10,7 +10,7 @@ class TimesheetsDeleted(Repository):
 TimesheetsDeleted.add_me_to_subcls()
 TimesheetsDeleted.add_url("/timesheets_deleted")
 TimesheetsDeleted.add_model(models.TimesheetDeleted)
-TimesheetsDeleted.add_actions([u'list'])
+TimesheetsDeleted.add_actions(['list'])
 TimesheetsDeleted.filter("start_date", date)
 TimesheetsDeleted.filter("end_date", date)
 TimesheetsDeleted.filter("ids", [int])

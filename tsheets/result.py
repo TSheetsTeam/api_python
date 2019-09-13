@@ -9,14 +9,14 @@ class Result(object):
 
     def _get_status_code(self):
         try:
-            status_code = self.body['results'].values()[0].values()[0]['_status_code']
+            status_code = list(self.body['results'].values())[0].values()[0]['_status_code']
             return status_code
         except:
             return 0
 
     def message(self):
         try:
-            message = self.body['results'].values()[0].values()[0]['_status_extra']
+            message = list(self.body['results'].values())[0].values()[0]['_status_extra']
             return "Unexpected API response - inspect result body. Exception Message: {}".format(message)
         except:
             return ""

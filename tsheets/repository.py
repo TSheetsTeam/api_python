@@ -1,8 +1,8 @@
 import pytz
 import dateutil
-from results import Results
+from .results import Results
 from datetime import date, datetime
-from error import FilterInvalidValueError, MethodNotAvailableError
+from .error import FilterInvalidValueError, MethodNotAvailableError
 
 
 class Repository(object):
@@ -21,13 +21,13 @@ class Repository(object):
             return Results(self.url, self.validated_options(options), self.model, self.bridge, self.is_singleton, "report")
 
     def first(self):
-        return self.where().next()
+        return next(self.where())
 
     def all(self):
         return self.where().all()
 
     def validated_options(self, options):
-        for name, value in options.iteritems():
+        for name, value in options.items():
             if name in Repository.filters:
                 type_of_filter = Repository.filters[name]
                 if isinstance(type_of_filter, list):

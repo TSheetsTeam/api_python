@@ -10,7 +10,7 @@ class Notifications(Repository):
 Notifications.add_me_to_subcls()
 Notifications.add_url("/notifications")
 Notifications.add_model(models.Notification)
-Notifications.add_actions([u'list', u'add', u'delete'])
+Notifications.add_actions(['list', 'add', 'delete'])
 Notifications.filter("ids", [int])
 Notifications.filter("delivery_before", datetime)
 Notifications.filter("delivery_after", datetime)

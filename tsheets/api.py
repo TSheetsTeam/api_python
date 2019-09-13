@@ -1,8 +1,8 @@
-import logger
-from models import *
-from config import Config
-from bridge import Bridge
-from helpers import class_to_endpoint
+from . import logger
+from .models import *
+from .config import Config
+from .bridge import Bridge
+from .helpers import class_to_endpoint
 from tsheets.repository import Repository
 
 

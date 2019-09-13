@@ -1,5 +1,5 @@
 import pytz
-import helpers
+from . import helpers
 import dateutil.parser
 from datetime import datetime, date
 
@@ -33,7 +33,7 @@ class Model(object):
     def mass_assign(cls, instance, hash):
         dynamic = instance._dynamic_accessors
 
-        for k,v in hash.iteritems():
+        for k,v in hash.items():
             casted = cls.cast_raw(v, k)
             if hasattr(instance, k):
                 setattr(instance, k, casted)
@@ -142,7 +142,7 @@ class Model(object):
     def to_raw(self, mode=None):
         attributes = self.get_attributes(mode)
         obj = {}
-        for k, v in attributes.iteritems():
+        for k, v in attributes.items():
             obj[k] = self.cast_to_raw(v, k)
         return obj
 

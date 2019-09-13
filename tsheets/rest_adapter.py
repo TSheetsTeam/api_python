@@ -1,4 +1,4 @@
-import error
+from . import error
 import logging
 import requests
 
