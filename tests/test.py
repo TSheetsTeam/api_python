@@ -45,14 +45,17 @@ def main():
 
     # get a list of job codes
     my_jobcode = None
+    my_jobname = 'Ancient Artifacts Inc.'
     jobcodes = api.jobcodes.where(type = 'regular', active = True)
     for jobcode in jobcodes:
-        if jobcode.name == 'Ancient Artifacts Inc.':
+        if jobcode.name == my_jobname:
             my_jobcode = jobcode
 
     if not my_jobcode:
-        print("No jobcode named 'Ancient Artifacts Inc.' found. " \
-              "Make sure you have that created for your account for this test to continue")
+        print("No jobcode named {0} found. " \
+              "Make sure you have that created for your account " \
+              "for this test to continue".format(my_jobname))
+        return
 
     print(" - Selecting Jobcode {}".format(my_jobcode.name))
 
