@@ -10,7 +10,7 @@ class Jobcodes(Repository):
 Jobcodes.add_me_to_subcls()
 Jobcodes.add_url("/jobcodes")
 Jobcodes.add_model(models.Jobcode)
-Jobcodes.add_actions([u'list', u'add', u'edit'])
+Jobcodes.add_actions(['list', 'add', 'edit'])
 Jobcodes.filter("ids", [int])
 Jobcodes.filter("parent_ids", [int])
 Jobcodes.filter("type", str)

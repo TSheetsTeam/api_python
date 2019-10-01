@@ -37,38 +37,41 @@ def main():
     current_user = api.current_user.first()
     user_id = current_user.id
 
-    print "Successfully connected to TSheets. Grabbed the current user's id: {}".format(user_id)
+    print("Successfully connected to TSheets. Grabbed the current user's id: {}".format(user_id))
 
     # Make sure we can pull last-modified, non-paginated
     last_modified = api.last_modified_timestamps.where(endpoints='timesheets')
-    print "Found timestamp for timesheets: {}".format(last_modified.first().timesheets)
+    print("Found timestamp for timesheets: {}".format(last_modified.first().timesheets))
 
     # get a list of job codes
     my_jobcode = None
+    my_jobname = 'Ancient Artifacts Inc.'
     jobcodes = api.jobcodes.where(type = 'regular', active = True)
     for jobcode in jobcodes:
-        if jobcode.name == 'Ancient Artifacts Inc.':
+        if jobcode.name == my_jobname:
             my_jobcode = jobcode
 
     if not my_jobcode:
-        print "No jobcode named 'Ancient Artifacts Inc.' found. " \
-              "Make sure you have that created for your account for this test to continue"
+        print("No jobcode named {0} found. " \
+              "Make sure you have that created for your account " \
+              "for this test to continue".format(my_jobname))
+        return
 
-    print " - Selecting Jobcode {}".format(my_jobcode.name)
+    print(" - Selecting Jobcode {}".format(my_jobcode.name))
 
     # check to see if I am already on the clock
     timesheet = None
     timesheets = api.timesheets.where(modified_since=datetime(2015,7,1), on_the_clock = True, user_ids=[current_user.id]).all()
     if len(timesheets) > 0:
-        print ' - Already clocked-in'
+        print(' - Already clocked-in')
         timesheet = timesheets[0]
-        print timesheet
+        print(timesheet)
     else:
-        print ' - Not clocked-in'
+        print(' - Not clocked-in')
 
     # Toggle clock-in or clock-out
     if timesheet == None:
-        print ' - Clocking in'
+        print(' - Clocking in')
 
         # create a new timesheet
         timesheet = Timesheet()
@@ -79,14 +82,14 @@ def main():
         timesheet.jobcode_id = my_jobcode.id
         result = api.timesheets.insert(timesheet)
         if not result.is_success():
-            print result.message()
+            print(result.message())
     else:
-        print ' - Clocking out'
+        print(' - Clocking out')
         # edit existing timesheet
         timesheet.end = datetime.now()
         result = api.timesheets.update(timesheet)
         if not result.is_success():
-            print result.message()
+            print(result.message())
 
 if __name__ == '__main__':
     main()

@@ -10,7 +10,7 @@ class Users(Repository):
 Users.add_me_to_subcls()
 Users.add_url("/users")
 Users.add_model(models.User)
-Users.add_actions([u'list', u'add', u'edit'])
+Users.add_actions(['list', 'add', 'edit'])
 Users.filter("ids", [int])
 Users.filter("usernames", [str])
 Users.filter("active", bool)

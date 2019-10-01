@@ -10,7 +10,7 @@ class Payroll(Repository):
 Payroll.add_me_to_subcls()
 Payroll.add_url("/reports/payroll")
 Payroll.add_model(models.Payroll)
-Payroll.add_actions([u'report'])
+Payroll.add_actions(['report'])
 Payroll.filter("start_date", date)
 Payroll.filter("end_date", date)
 Payroll.filter("user_ids", int)

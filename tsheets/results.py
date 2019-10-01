@@ -1,5 +1,5 @@
-from helpers import class_to_endpoint
-import repos
+from .helpers import class_to_endpoint
+from . import repos
 
 
 class Results(object):
@@ -20,7 +20,7 @@ class Results(object):
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         if (self.index+1) < len(self.loaded) or (self.has_more and self._load_next_batch()):
             self.index += 1
             next_value = self.loaded[self.index]
@@ -29,7 +29,7 @@ class Results(object):
             raise StopIteration
 
     def first(self):
-        return self.next()
+        return next(self)
 
     def all(self):
         return list(self)

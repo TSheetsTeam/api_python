@@ -10,7 +10,7 @@ class CurrentTotals(Repository):
 CurrentTotals.add_me_to_subcls()
 CurrentTotals.add_url("/reports/current_totals")
 CurrentTotals.add_model(models.CurrentTotals)
-CurrentTotals.add_actions([u'report'])
+CurrentTotals.add_actions(['report'])
 CurrentTotals.filter("user_ids", [int])
 CurrentTotals.filter("group_ids", [int])
 CurrentTotals.filter("on_the_clock", str)

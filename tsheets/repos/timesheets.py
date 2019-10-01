@@ -10,7 +10,7 @@ class Timesheets(Repository):
 Timesheets.add_me_to_subcls()
 Timesheets.add_url("/timesheets")
 Timesheets.add_model(models.Timesheet)
-Timesheets.add_actions([u'list', u'add', u'edit', u'delete'])
+Timesheets.add_actions(['list', 'add', 'edit', 'delete'])
 Timesheets.filter("ids", [int])
 Timesheets.filter("start_date", date)
 Timesheets.filter("end_date", date)

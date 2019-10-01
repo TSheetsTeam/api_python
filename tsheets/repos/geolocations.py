@@ -10,7 +10,7 @@ class Geolocations(Repository):
 Geolocations.add_me_to_subcls()
 Geolocations.add_url("/geolocations")
 Geolocations.add_model(models.Geolocation)
-Geolocations.add_actions([u'list', u'add'])
+Geolocations.add_actions(['list', 'add'])
 Geolocations.filter("ids", [int])
 Geolocations.filter("modified_before", datetime)
 Geolocations.filter("modified_since", datetime)

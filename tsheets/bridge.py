@@ -1,5 +1,5 @@
-from result import Result
-from error import TSheetsError
+from .result import Result
+from .error import TSheetsError
 
 
 class Bridge(object):
@@ -10,13 +10,13 @@ class Bridge(object):
 
     def items_from_data(self, data, name, is_singleton, mode):
         if mode == "report":
-            objects = data["results"].values()[0]
-            return [] if not objects else objects.values()
+            objects = list(data["results"].values())[0]
+            return [] if not objects else list(objects.values())
 
         if is_singleton or (not isinstance(data['results'][name], dict)):
             return data['results'][name]
         else:
-            return data['results'][name].values()
+            return list(data['results'][name].values())
 
     def next_batch(self, url, name, options, is_singleton = False, mode="list"):
         method = "get" if mode == "list" else "post"
@@ -36,8 +36,8 @@ class Bridge(object):
             else:
                 s_dict = {}
                 if 'supplemental_data' in data:
-                    for key, value in data['supplemental_data'].iteritems():
-                        s_dict[key] = value.values()
+                    for key, value in data['supplemental_data'].items():
+                        s_dict[key] = list(value.values())
                 has_more = data.get('more', None)
                 result = {"items": self.items_from_data(data, name, is_singleton, mode),
                           "has_more": (has_more == 'true'),

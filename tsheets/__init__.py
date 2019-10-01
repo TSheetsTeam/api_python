@@ -1,2 +1,2 @@
-import repos
-import models
+from . import repos
+from . import models
